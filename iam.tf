@@ -23,6 +23,11 @@ resource "aws_iam_role_policy_attachment" "ec2-instance-role-attachment" {
   role = "${aws_iam_role.ec2-instance-role.name}"
 }
 
+resource "aws_iam_instance_profile" "ec2-instance-profile" {
+  name = "ec2-instance-profile"
+  role = "${aws_iam_role.ec2-instance-role.name}"
+}
+
 data "aws_iam_policy_document" "ecs-service-assume-policy" {
   statement {
     principals {
@@ -111,5 +116,10 @@ resource "aws_iam_role_policy_attachment" "infra-instance-role-attachment-1" {
 
 resource "aws_iam_role_policy_attachment" "infra-instance-role-attachment-2" {
   policy_arn = "${aws_iam_policy.allow-put-metrics-policy.arn}"
+  role = "${aws_iam_role.infra-instance-role.name}"
+}
+
+resource "aws_iam_instance_profile" "infra-instance-profile" {
+  name = "infra-instance-profile"
   role = "${aws_iam_role.infra-instance-role.name}"
 }
